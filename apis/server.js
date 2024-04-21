@@ -1,11 +1,15 @@
-const express=require("express")
-const dotenv=require("dotenv")
+import express from "express"
+import dotenv from "dotenv"
+import authRoutes from "./routes/auth.routes.js"
+import { connectToDb } from "./db/connectDb.js"
 dotenv.config()
 const port=process.env.PORT ||5000
-
 const app=express()
-app.get('/',(req,res)=>{
-})
-app.listen(port,
+app.use(express.json())
+app.use('/api/auth',authRoutes)
+
+app.listen(port,()=>{
+    connectToDb()
     console.log(`server is running on PORT ${port}`)
+}
 )
