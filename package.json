@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "dev":"nodemon  apis/server.js",
+    "dev": "nodemon  apis/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",

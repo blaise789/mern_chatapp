@@ -1,6 +1,7 @@
 import User from "../models/user.model.js"
 import bcrypt from "bcryptjs"
 import generateTokenAndSetCookie from "../utils/generateToken.js"
+
 export const registerUser=async (req,res)=>{
     try{
     const {fullName,username,password,confirmPassword,gender}=req.body
@@ -43,23 +44,41 @@ export const registerUser=async (req,res)=>{
     }
 }
 export const loginUser=async (req,res)=>{
-  const {username,password}=req.body
-  const user=await User.findOne({username})
-  const isPasswordCorrect= await bcrypt.compare(password,user?.password || "")
+  try{
+    const {username,password}=req.body
+    const user=await User.findOne({username})
+    const isPasswordCorrect= await bcrypt.compare(password,user.password)
+  
+  if(!user || !isPasswordCorrect){
+    res.status(400).json({error:"invalid username or password"})
+  
+  }
+  generateTokenAndSetCookie(user._id,res)
+  res.status(200).json({
+    id:user._id,
+    username:user.username,
+    fullName:user.fullName,
+    profilePic:user.profilePic,
+  })
 
-if(!user || !isPasswordCorrect){
-  res.status(400).json({error:"invalid username or password"})
+  }
+  catch(err){
+    res.status(50).json({error:"internal server error"})
+  }
 
-}
-generateTokenAndSetCookie(user._id,res)
-res.status(200).json({
-  id:user._id,
-  username:user.username,
-  fullName:user.fullName,
-  profilePic:user.profilePic,
-})
     // return res.send("login route")
 }
-export const logoutUser=(req,res)=>{
-    return res.send("logout route")
+export const logoutUser=async(req,res)=>{
+    // return res.send("logout route")
+    try{
+      res.cookie("jwt","",{maxAge:0})
+      res.json({message:"logout successfully"})
+    
+    }
+    catch(error){
+      res.status(500).json({error:"internal server error"})
+      
+      res.json({message:"logout failed"})
+
+    }
 }
