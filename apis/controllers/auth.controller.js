@@ -39,7 +39,7 @@ export const registerUser=async (req,res)=>{
  })
     }
     catch(error){
-    res.status(500).json({}).json({error:"failed to register user"})
+    res.status(500).json({error:"failed to register user"})
 
     }
 }
