@@ -50,9 +50,10 @@ export const loginUser=async (req,res)=>{
     const isPasswordCorrect= await bcrypt.compare(password,user.password)
   
   if(!user || !isPasswordCorrect){
-    res.status(400).json({error:"invalid username or password"})
+    return res.status(400).json({error:"invalid username or password"})
   
   }
+
   generateTokenAndSetCookie(user._id,res)
   res.status(200).json({
     id:user._id,
@@ -63,7 +64,7 @@ export const loginUser=async (req,res)=>{
 
   }
   catch(err){
-    res.status(50).json({error:"internal server error"})
+    res.status(400).json({error:"user does not exist"})
   }
 
     // return res.send("login route")

@@ -4,12 +4,12 @@ import Conversations from './Conversations'
 import LogoutButton from './LogoutButton'
 const Sidebar = () => {
   return (
-    <div className='border bg-slate-500 p-4 flex flex-col ' >
+    <div className='border-slate-500 p-4 flex flex-col ' >
         <SearchInput />
-        <div className='divider px-3'>
+        <div className='divider px-3'>  
+        </div>
          <Conversations />
          < LogoutButton />
-        </div>
     </div>
   )
 }
