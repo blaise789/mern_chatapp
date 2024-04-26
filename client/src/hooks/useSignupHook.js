@@ -41,7 +41,7 @@ const useSignup = () => {
         throw new Error(data.error);
       }
       toast.success("user created successfully");
-      localStorage.setItem("logged-user", JSON.stringify(data));
+      localStorage.setItem("chat-user", JSON.stringify(data));
       setAuthUser();
       navigate("/");
     } catch (error) {

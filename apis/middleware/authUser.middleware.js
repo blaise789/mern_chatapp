@@ -4,7 +4,6 @@ import User from '../models/user.model.js';
 const protectRoute=async(req,res,next)=>{
 
     try{
-        console.log(req.cookies)
         const token=req.cookies.jwt
         if(!token){
             return res.status(400).json({error:"An authorized no token Provided"})
@@ -26,7 +25,6 @@ const protectRoute=async(req,res,next)=>{
 
     }
     catch(error){
-        console.log(error)
         res.status(500).json({error:"internal server error"})
     }
 }

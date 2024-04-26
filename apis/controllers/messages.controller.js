@@ -5,6 +5,10 @@ export const sendMessage=async(req,res)=>{
         const {message}=req.body
         const {id:recieverId}=req.params
         const senderId=req.user._id
+        console.log(message)
+        if(!message){
+            throw new Error("please enter the message")
+        }
         let conversation=await Conversation.findOne({
             participants:{$all:[senderId,recieverId]}
         })
@@ -24,11 +28,11 @@ export const sendMessage=async(req,res)=>{
         }
 
        
-    res.status(201).json({newMessage})
+    res.status(201).json(newMessage)
     }
     catch(error){
-   console.log(error)
-   res.status(500).json({message:"internal server error"})
+   console.log(error.message)
+   return res.status(500).json({error:error.message})
     }
 }
 export const getMessages=async(req,res)=>{
@@ -44,7 +48,7 @@ export const getMessages=async(req,res)=>{
     res.status(200).json({messages:conversation.messages})
     }
     catch(error){
-        res.status(500).json({message:"error in the controller"})
+        res.status(500).json({error:error.message})
     }
 
 
