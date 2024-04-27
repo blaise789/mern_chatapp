@@ -18,8 +18,6 @@ import { useNavigate } from "react-router-dom";
                     body: JSON.stringify({ username, password }),
                 });
                 const data = await res.json();
-                console.log(data);
-               console.log(data.error)
 			if (data.error) {
 				throw new Error(data.error);
 			}
@@ -30,7 +28,6 @@ import { useNavigate } from "react-router-dom";
             }
             catch(error){
                 toast.error(error.message)
-                console.log(error)
 
             }
             finally{

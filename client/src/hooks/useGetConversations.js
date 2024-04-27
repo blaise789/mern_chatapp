@@ -9,16 +9,13 @@ const useGetConversations = () => {
     setLoading(true);
     try {
       const res = await fetch("/api/users");
-      console.log(res)
       const data = await res.json();
-      console.log("conversations data ---> ",data);
       if (data.error) {
         throw new Error(data.error);
       }
       setConversations(data);
     } catch (error) {
       toast.error(error.message);
-      console.log(error.message)
     } finally {
       setLoading(false);
     }
@@ -26,6 +23,6 @@ const useGetConversations = () => {
   };
   getConversations()
   },[])
-  return { loading, conversations};
+  return { loading, conversations,setConversations};
 };
 export default useGetConversations;
