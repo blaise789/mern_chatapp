@@ -11,7 +11,7 @@ export const SocketContextProvider=({children})=>{
 
     useEffect(()=>{
         if(authUser){
-           const  socket=io("http://localhost:8000",{query:{userId:authUser.id}})
+           const  socket=io("https://mern-chatapp-qkoq.onrender.com",{query:{userId:authUser.id}})
            setSocket(socket)
            socket.on("getOnlineUsers",(users)=>{
             setOnlineUsers(users)
