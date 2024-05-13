@@ -9,12 +9,14 @@ const Messages = () => {
   const {messages,loading}=useGetMessages()
   const {selectedConversation}=useConversation()
 	useListenMessage();
+  
   const lastMessageRef=useRef()
   useEffect(()=>{
     setTimeout(()=>{
       lastMessageRef.current?.scrollIntoView({behaviour:"smooth"})
     },10)
   },[messages])
+
 
   return (
     <div className='px-4 flex-1 overflow-auto'>

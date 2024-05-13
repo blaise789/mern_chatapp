@@ -1,11 +1,13 @@
 import Message from "../models/messsages.model.js"
 import Conversation from "../models/conversation.model.js"
+import { getRecieverSocketId,io } from "../socket/socket.js"
+// import { io } from "../socket/socket.js"
 export const sendMessage=async(req,res)=>{
+
     try{
         const {message}=req.body
         const {id:recieverId}=req.params
         const senderId=req.user._id
-        console.log(message)
         if(!message){
             throw new Error("please enter the message")
         }
@@ -24,7 +26,12 @@ export const sendMessage=async(req,res)=>{
         if(newMessage){
         conversation.messages.push(newMessage._id)
         await Promise.all([newMessage.save(),conversation.save()])
-        
+       const recieverSocketId=getRecieverSocketId(recieverId)
+       console.log(recieverSocketId)
+       if(recieverSocketId){
+        io.to(recieverSocketId).emit("newMessage",newMessage)
+        // console.log(newMessage)
+       }
         }
 
        

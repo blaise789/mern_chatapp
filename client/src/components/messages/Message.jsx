@@ -4,6 +4,8 @@ import { extractTime } from "../../utils/extractTime";
 // import useConversation from "../../zustand/useConversation";
 
 const Message = ({ message,profilePicture}) => {
+  // console.log(shouldShake)
+  // console.log(message)
   const { authUser } = useAuthContext();
   const fromMe = message.senderId === authUser.id;
   const formattedTime = extractTime(message.createdAt);
@@ -12,8 +14,10 @@ const Message = ({ message,profilePicture}) => {
     ? authUser.profilePic
     :profilePicture;
   const bubbleBgColor = fromMe ? "bg-blue-500" : "";
-  const shakeClass = message.shouldShake ? "shake" : "";
-
+  // console.log(message.shouldShake)
+  const shakeClass = message.shouldShake? "shake" : "";
+  // console.log(message.shouldShake)
+console.log(shakeClass)
   return (
     <div className={`chat ${chatClassName}`}>
       <div className="chat-image avatar">
